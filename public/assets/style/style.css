@@ -1,0 +1,31 @@
+body 
+{
+	background-color: #F2F2F2;
+	min-height: 100vh;
+}
+
+@font-face {
+	font-family: 'Raleway-Regular';
+	src: url('/assets/font/static/Raleway-Regular.ttf');
+	font-weight: 300;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.alert {
+    animation: fadeInOut 6s infinite;
+}
+
+input[id="default-search"], input[id="title-input"], input[id="text-input"] {
+	border: 2px solid #000;
+	border-radius: 0.25rem;
+}
+
+input[id="default-search"], input[id="title-input"], input[id="text-input"] {
+	border-color: #678800;
+	outline: none;
+}

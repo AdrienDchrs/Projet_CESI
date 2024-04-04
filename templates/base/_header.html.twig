@@ -1,0 +1,57 @@
+<header class="flex items-center justify-between px-4 py-2 bg-[#678841]">
+    <a href="{{ path('home.index') }}"> <img src="/assets/images/AD.png" id="logo" class="w-8 h-8 sm:w-8 sm:h-8 md:w-16 md:h-16 lg:w-32 lg:h-32 xl:w-32 xl:h-32" alt="logo"></a>
+
+    <!-- is_granted sert à connaître si l'utilisateur s'est connecté correctement -->
+    {% if app.request.attributes.get('_route') == 'filActualite' %}
+        <h2 class="text-white font-bold sm:text-sm md:text-lg lg:text-2xl xl:text-4xl"> Fil d'actualité </h2>
+    {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+        <h2 class="text-white font-bold sm:text-sm md:text-lg lg:text-2xl xl:text-4xl"> Bienvenue sur le site <u>{{ app.user.prenom }}</u> ! Prêt à encaisser ? </h2>
+    {% else %}
+        <h2 class="text-white font-bold sm:text-sm md:text-lg lg:text-2xl xl:text-4xl"> Bienvenue sur le site d'AD pronostiques </h2>
+    {% endif %}
+
+
+    <!-- Menu hamburger -->
+    <div class="lg:hidden">
+        <!-- Barres du menu hamburger -->
+        <button id="menu-toggle" class="flex items-center px-3 py-2 border rounded text-white border-white">
+            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 3h20v2H0V3zM0 9h20v2H0V9zM0 15h20v2H0v-2z"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Contenu du menu -->
+    <div id="menu" class="hidden lg:flex lg:items-center lg:justify-end">
+        <div class="flex items-center space-x-2">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
+                {% if app.request.attributes.get('_route') == 'filActualite' %} 
+                    <a href="{{ path('parametres', {'id': app.user.id}) }}"> 
+                        <button id="button" type="button" class="bg-white rounded font-semibold text-black px-4 py-4 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent"> Mes paramètres </button> 
+                    </a>   
+                    <a href="{{ path('security.deconnexion') }}"> 
+                        <button id="button" type="button" class="bg-white rounded font-semibold text-black px-4 py-4 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent"> Se déconnecter </button> 
+                    </a>
+                {% else %} 
+                    <a href="{{ path('filActualite') }}"> 
+                        <button id="button" type="button" class="bg-white rounded font-semibold text-black px-4 py-4 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent"> Fil d'actualité </button> 
+                    </a>
+
+                    <a href="{{ path('parametres', {'id': app.user.id}) }}"> 
+                        <button id="button" type="button" class="bg-white rounded font-semibold text-black px-4 py-4 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent"> Mes paramètres </button> 
+                    </a>   
+                    <a href="{{ path('security.deconnexion') }}"> 
+                        <button id="button" type="button" class="bg-white rounded font-semibold text-black px-4 py-4 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent"> Se déconnecter </button> 
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{{ path('security.connexion') }}"> 
+                    <button id="button" type="button" class="bg-white rounded font-semibold text-black px-4 py-4 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent">Se connecter </button> 
+                </a>
+                <a href="{{ path('security.inscription') }}"> 
+                    <button id="button" type="button" class="bg-white rounded font-semibold text-black px-4 py-4 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent">S'inscrire </button> 
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</header>

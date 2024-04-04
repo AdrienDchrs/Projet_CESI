@@ -1,0 +1,75 @@
+{% extends "base.html.twig" %}
+
+{% block title %} AD Pronos - Connexion {% endblock %}
+
+{% block body %}
+<body class="relative w-full bg-cover bg-center bg-cover bg-no-repeat bg-image" style="background-image: url('/assets/images/tennis.jpg');">
+    <div class="overlay absolute inset-0 bg-black opacity-50"> </div>
+    <header class="absolute top-0 left-0 right-0 px-4 py-2 flex items-center justify-between shadow-lg">
+        <a href="/"> <img src="/assets/images/AD.png" id="logo" class="w-8 h-8 sm:w-16 sm:h-16 md:w-16 md:h-16 lg:w-32 lg:h-32 xl:w-32 xl:h-32"> </a>
+    </header>
+
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-md w-96 shadow-md border border-black z-10">
+            <form action="{{ path('security.connexion') }}" method="POST" class="">
+                <label for="mail" id="mail" class="text-[#F15508]"> Adresse e-mail : * </label>
+                <input type="email" name="_username" id="email" placeholder="exemple@gmail.com" required class="w-full p-2 border rounded-md mb-2">
+
+                <label for="password" id="password" class="text-[#F15508]"> Mot de passe : *</label>
+                <input type="password" name="_password" id="password" placeholder="********" required class="w-full p-2 border rounded-md mb-2">
+
+                <div class="flex justify-between">
+                    <p> <b> <a href="/inscription" class="underline text-[#F15508]">Inscris-toi ici.</a> </b> </p>
+                    <p id="motDePasseOublie"> <b> <a href="#" class="underline text-[#F15508]">Mot de passe oublié ?</a> </b> </p>
+                </div>
+
+                <div class="flex items-center justify-center mt-6">
+                    <button id="button" type="submit" class="w-full bg-[#F15508] border border-[#F15508] rounded font-semibold text-white px-4 py-2 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent"> Se connecter </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    {% if error %}
+    <div class="fixed bottom-60 left-0 right-0 flex justify-center items-center">
+        <div id="alert" class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="sr-only">Info</span>
+            <div class="ms-3 text-sm font-medium mr-2"> Adresse e-mail ou mot de passe incorrect ! </div>
+            <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-2" aria-label="Close">
+                <span class="sr-only">Close</span>
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    {% else %}
+        {% for message in app.flashes('success') %}
+            <div class="fixed bottom-60 left-2 right-0 flex justify-center items-center">
+                <div id="alert" class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                <span class="sr-only">Info</span>
+                <div class="ms-3 text-sm font-medium mr-2">
+                    {{ message }}
+                </div>
+                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    
+
+    {% include "base/_footer.html.twig" %} 
+</body> 
+{% endblock %}

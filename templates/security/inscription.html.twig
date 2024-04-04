@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block title %} AD Pronos - Inscription {% endblock %}
+
+{% block body %}
+    <body class="relative w-full bg-cover bg-center" style="background-image: url('/assets/images/tennis.jpg');">
+        <div class="overlay absolute inset-0 bg-black opacity-50"> </div>
+        <header class="absolute top-0 left-0 right-0 px-4 py-2 flex items-center justify-between shadow-lg">
+            <a href="/"> <img src="/assets/images/AD.png" id="logo" class="w-8 h-8 sm:w-16 sm:h-16 md:w-16 md:h-16 lg:w-32 lg:h-32 xl:w-32 xl:h-32"> </a>
+        </header>
+
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+            <div class="bg-white p-8 rounded-md w-96 shadow-md border border-black relative">
+                    {{ form_start(form) }}
+                    
+                    {{ form_label(form.nom, 'Nom : *', { 'label_attr': {'class': 'mb-2 text-[#F15508]'} }) }}
+                    {{ form_widget(form.nom) }}
+                    {{ form_errors(form.nom) }}
+
+                    {{ form_label(form.prenom, 'Prénom : *', { 'label_attr': {'class': 'mb-2 text-[#F15508]'} }) }}
+                    {{ form_widget(form.prenom) }}
+                    {{ form_errors(form.prenom) }}
+
+                    {{ form_label(form.email, 'Adresse e-mail : *', { 'label_attr': {'class': 'mb-2 text-[#F15508]'} }) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+
+                    {{ form_widget(form.plainPassword) }}
+
+                    <div class="flex space-x-12">
+                        <p class="text-[#F15508]"> Déjà inscrit ? <b> <a href="/connexion" class="underline text-[#F15508]"> Connecte toi ici. </a> </b> </p>
+                    </div>
+
+                    <div class="flex items-center justify-center p-1 mt-6">
+                        {{ form_widget(form.submit, { 'attr': { 'class': 'w-full bg-[#F15508] border border-[#F15508] rounded font-semibold text-white px-4 py-2 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent' } }) }}
+                    </div> 
+
+                    {{ form_end(form) }}
+            </div>
+        </div>
+        {% include "base/_footer.html.twig" %}
+    </body>
+{% endblock %}
+ 
+                

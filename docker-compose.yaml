@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  # Service nginx pour le serveur web Nginx
+  nginx:
+    image: nginx:1.22-alpine  # Utilise l'image nginx version 1.22 basée sur Alpine Linux
+    ports:
+      - "8080:80"  # Fait correspondre le port 8080 de l'hôte au port 80 du conteneur
+    volumes: 
+      - ./:/code  # Montez le répertoire local actuel sur /code dans le conteneur
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Montez le fichier nginx.conf local sur /etc/nginx/nginx.conf dans le conteneur
+
+  # Service php pour exécuter PHP
+  php: 
+    build: .  # Utilisez le Dockerfile du répertoire local pour construire l'image
+    volumes: 
+      - ./:/code  # Montez le répertoire local actuel sur /code dans le conteneur
+
+  # Service mysql pour la base de données MySQL
+  mysql: 
+    image: mysql:8.2  # Utilise l'image MySQL version 8.2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: projet_cesi
+      MYSQL_PASSWORD: root  
+    volumes:
+      - data:/var/lib/mysql  # Montez un volume nommé data sur /var/lib/mysql dans le conteneur pour stocker les données MySQL
+
+  #Service phpmyadmin pour l'interface d'administration de MySQL
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin  # Utilise l'image phpMyAdmin
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root 
+      MYSQL_PASSWORD: root
+    ports:
+      - "8081:80"  # Fait correspondre le port 8081 de l'hôte au port 80 du conteneur
+
+  # Service database pour la base de données PostgreSQL
+  database:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine  # Utilise l'image PostgreSQL Alpine avec une version spécifiée par une variable d'environnement ou par défaut 16
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-projet_cesi}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
+      POSTGRES_USER: ${POSTGRES_USER:-root}
+    volumes:
+      - database_data:/var/lib/postgresql/data  # Montez un volume nommé database_data sur /var/lib/postgresql/data dans le conteneur pour stocker les données PostgreSQL
+
+volumes:
+  data:  # Volume pour stocker les données de MySQL
+  database_data:  # Volume pour stocker les données de PostgreSQL

@@ -1,0 +1,44 @@
+Pour la connexion / inscription : 
+-----------------------------------
+	Utilisateur
+-----------------------------------
+idU,nomU,prenomU,email,password,estAdmin 
+
+
+Les contraintes de notre base de données
+- le nom ne doit pas avoir plus de 50 caractères pas de chiffres et au moins 3 caractères
+- le prénom ne doit pas avoir plus de 50 caractères pas de chiffres et au moins 3 caractères
+- l'email ne doit pas avoir plus de 255 caractères
+- le mot de passe doit au moins contenir 8 caractères
+- estAdmin est soit 0 soit 1 
+
+
+Pour la publication :
+-----------------------------------
+	Publication
+-----------------------------------
+
+idP,titre,texte,img (lien), idU
+
+
+
+Publication ----- Crée ----- Utilisateur 1,1 / 0..n
+
+
+Commandes Symfony : 
+Créer une table : php bin/console make:entity
+Créer une migration :php bin/console make:migration
+Push vers notre base : php bin/console doctrine:migrations:migrate
+Insérer des fixtures : php bin/console doctrine:fixtures:load
+
+
+- Le back du filtre
+	- Filtre par sport ? 
+	- Dans ce cas ajouter un colonne "Catégorie" et l'ajouter dans le formulaire. 
+- Trouver quoi mettre en dessous du filtre
+	- Si filtre par Catégorie -> CheckBox
+- Corrections de bug
+- Formulaire de contact ?
+	- Dans ce cas, supprimer icone en bas, et rendre cliquable le "Contactez-moi" menant à un formulaire de contact
+- Donner + de paramètres à modifier
+	- Au moins l'adresse e-mail

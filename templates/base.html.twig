@@ -3,17 +3,32 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        <link rel="icon" href="/assets/images/logo.png">
+        <link rel="shortcut icon" href="/assets/images/logo.png" type="image/x-icon">
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="/assets/style/style.css">
+            <link href="https://fonts.googleapis.com/css2?family=Raleway-Regular:wght@400;700&display=swap" rel="stylesheet">
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script src="https://cdn.tailwindcss.com"></script>
+	        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="/assets/scripts/script.js" defer></script>
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block header %} 
+        {% endblock %}
+
+        {% block body %}
+        {% endblock %}
+
+        {% block footer %}
+        {% endblock %}
+
     </body>
 </html>

@@ -1,0 +1,162 @@
+{% extends "base.html.twig" %}
+
+{% block title %} AD pronos - Fil d'actualité  {% endblock %}
+
+{% block body %}
+{% include "base/_header.html.twig" %}
+
+<div class ="relative flex">
+    <form class="fixed ml-8 mt-5 w-1/5">   
+        <div class="relative">
+            <div class="fixed flex items-center ps-3 pointer-events-none mr-4 mt-6">
+                <svg class="w-4 h-4 text-black mr-2 hidden lg:block" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+            </div>
+            <input type="search" id="default-search" class="hidden lg:block w-full p-4 ps-10 text-base text-black border border-[#678841] rounded-lg bg-white" placeholder="Combiné du 17/02..." required />
+        </div>
+    </form>
+</div>
+
+<div class="relative">
+    <div class="fixed inset-y-32 right-4 border-black rounded overflow-hidden border bg-white px-4 w-1/5 mt-8 text-justify hidden lg:block">
+        Le football français est-il plus embarrassé qu’intéressé par la lutte contre le racisme et l’homophobie ? La question reste de mise, alors que la Ligue de football 
+        professionnel (LFP) a déployé le week-end des 29, 30 et 31 mars le premier volet d’une campagne contre les discriminations qui sépare les dates de mobilisation. Ainsi, la 
+        lutte contre l’homophobie conserve son propre moment, distinct de celui qui a concerné exclusivement le racisme, ce week-end, lors de la vingt-septième journée de Ligue 1 et
+        de la trentième de Ligue 2. Une demande des joueurs lors des ateliers de sensibilisation organisés dans les clubs par la LFP, a précisé celle-ci. L’instance est fondée à 
+        écouter les joueurs, mais peut-être a-t-elle un peu trop entendu ceux qui ont refusé, les saisons précédentes, de porter les maillots dont les numéros étaient aux 
+        couleurs de l’arc-en-ciel LGBT +, à l’occasion de la journée mondiale contre l’homophobie, en mai. Ceux-là y voyaient, probablement moins par homophobie que par 
+        ignorance, une promotion de l’homosexualité.
+    </div>
+</div>
+
+
+{% if is_granted('ROLE_ADMIN') %}
+<div class="flex flex-col lg:flex-row justify-center items-center md:w-full">
+    <div class="rounded overflow-hidden shadow-sm border border-black mb-2 mt-4 lg:w-1/2 lg:mb-0 lg:mr-1 lg:ml-1 bg-white">
+        {{ form_start(form) }}
+        <div class="mb-6 px-2">
+            {{ form_row(form.imageFile) }}
+        </div>
+        <div class="mb-6 px-2">
+            {{form_label(form.titre, 'Titre', {'label_attr':{'class':'block text-base font-semibold text-black','for':'title'} }) }}
+            {{ form_widget(form.titre) }}
+            {{ form_errors(form.titre) }}
+        </div>
+
+        <div class="mb-4 px-2">
+            {{form_label(form.texte, 'Texte', {'label_attr':{'class':'block text-base font-semibold text-black','for':'content'} }) }}
+            {{ form_widget(form.texte) }}
+            {{ form_errors(form.texte) }}
+        </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="mt-4 flex justify-center items-center">
+                <div id="alert" class="flex items-center p-4 text-green-800 rounded-lg bg-green-5 bg-gray-100" role="alert">
+                    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <div class="ms-3 text-sm font-medium mr-2">
+                        {{ message }}
+                    </div>
+                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-3" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="flex items-center justify-center p-1 mt-6">
+            {{ form_widget(form.submit, { 'attr': { 'class': 'lg:w-1/3 sm:w-full bg-[#678841] border border-[#678841] rounded font-semibold text-white px-4 py-2 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent mb-2 text-sm lg:text-base' } }) }}
+        </div>
+
+        {{ form_errors(form) }}
+        {{ form_end(form )}} 
+    </div>
+</div>
+{% endif %}
+
+{% if not publications.items is same as([]) %}
+    {% for publication in publications %}
+        <div class="flex flex-col lg:flex-row justify-center items-center">
+            <div class="border border-black rounded shadow-lg overflow-hidden mb-2 mt-4 lg:w-1/2 lg:mb-0 lg:mr-2 lg:ml-2 bg-white">
+                <div class="flex justify-between items-center space-x-end">
+                    <div class="font-bold text-left mt-2 sm:text-sm md:text-base lg:text-lg xl:text-lg ml-4">
+                        <span id="titre-{{ publication.id }}">{{ publication.titre|upper }}</span>
+
+                        <form id="publicationForm-{{ publication.id }}" class="items-end justify-end" action="{{ path('modifierPublication', {'id': publication.id}) }}" method="POST">
+                            
+                            <!-- Ce qui apparait au clic sur le bouton modifier -->
+                            <input type="text" name="titreModifie" value="{{ publication.titre|upper }}" class="w-full hidden" id="input-titre-{{ publication.id }}">
+                    </div>
+                    <div class="text-right mt-2 sm:text-sm md:text-base lg:text-lg xl:text-base mr-8">
+                        <span id="date-{{ publication.id }}">{{ publication.createdAt|date('d/m/Y à H:i:s','Europe/Paris') }}</span>
+                    </div>
+                </div>                
+                <div class="px-6 py-4 flex flex-col items-center">
+                    
+                    <!-- Avant le clic sur le bouton Modifier -->
+                    <button class="lg:w-1/3 sm:w-full bg-[#678841] border border-[#678841] rounded font-semibold text-white px-4 py-2 transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent text-sm lg:text-base" onclick="showImagePreview('{{ vich_uploader_asset(publication, 'imageFile') }}')" id="voir-image-{{ publication.id }}" type="button">Voir le combiné sportif</button>
+                    
+
+                    <!-- Après le clic sur le bouton Modifier -->
+                    <input type="file" name="imageModifie" class="w-1/3 mb-2 hidden" id="input-image-{{ publication.id }}">
+
+                    
+                    <!-- barre de séparation -->
+                    <div class="w-20 h-1 bg-black my-4" id="barre-{{ publication.id }}"></div> 
+
+                    <p id="texte-{{ publication.id }}">{{ publication.texte }}</p>
+                    <textarea name="texteModifie" class="w-full px-2 mt-2 hidden" id="textarea-texte-{{ publication.id }}">{{ publication.texte }}</textarea>
+                </div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="px-6 py-4 flex items-end justify-end" id="boutons-{{ publication.id }}">
+                        <div class="flex items-end space-x-4">
+
+                            <!-- Bouton pour afficher l'édition -->
+                            <div class = "items-end justify-end">
+                                <button id="bouton-edition-{{ publication.id }}" title="Modifier" type="button" onclick="toggleEditMode({{ publication.id }})" class="flex items-end justify-end transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent">
+                                    <img src="/assets/images/edition.png" alt="Modifier" class="w-6 h-6">
+                                </button>
+                            </div>
+
+                            <!-- Bouton pour sauvegarder, le form est initialisé juste au dessus -->
+                            
+                                <button id="bouton-sauvegarder-{{ publication.id }}" title="Sauvegarder" type="submit" class="flex items-end justify-end transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent hidden">
+                                    <img src="/assets/images/edition.png" alt="Sauvegarder" class="w-6 h-6">
+                                </button>
+                            </form>
+
+                            <form class="items-end justify-end" action="{{ path('supprimerPublication', {'id': publication.id}) }}" method="POST">
+                                <button title="Supprimer" type="submit" class="flex items-end justify-end transition-transform transform hover:scale-105 focus:outline-none focus-visible:border-0 focus-visible:before:bg-transparent">
+                                    <img src="/assets/images/supprimer.png" alt="Supprimer" class="w-6 h-6">
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="imagePreviewContainer" class="hidden fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-opacity-75 bg-gray-900">
+            <button id="closePreviewBtn" class="absolute top-4 right-4 text-white text-3xl cursor-pointer">&times;</button>
+            <div id="imagePreview" class="max-w-3/4 max-h-3/4 p-4 overflow-hidden">
+                <img id="previewImage" src=" {{ vich_uploader_asset(publication, 'imageFile') }}" alt="">
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <h4> Oups...Aucun combiné n'est présent dans le fil d'actualité. </h4>
+{% endif %}
+
+
+<div class="navigation flex justify-center mt-4 mb-4">
+    {{ knp_pagination_render(publications) }}
+</div>
+
+{% include "base/_footer.html.twig" %}
+{% endblock %}
